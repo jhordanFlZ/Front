@@ -1,10 +1,13 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
 
-@Injectable()
-export class ProductService {
-    private http= inject(HttpClient);
-    getProducts(){
-    return this.http.get('https://fakestoreapi.com/products');
+import {  Injectable } from "@angular/core";
+import { BaseHttpService } from "../../../data-access/base-http.service";
+import { map, Observable } from "rxjs";
+import { Product } from "../../../interfaces/product.interface";
+
+@Injectable({providedIn:'root' })
+export class ProductService extends BaseHttpService {
+    
+    getProducts(): Observable<Product[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/products`);
     }
 }
